@@ -80,6 +80,8 @@ struct BottomSheet<T: Any, ContentView: View>: ViewModifier {
 
         guard let rootViewController = windowScene.keyWindow?.rootViewController else { return }
 
+        let topViewController = rootViewController.presentedViewController ?? rootViewController
+
         if isPresented {
             bottomSheetViewController = BottomSheetViewController(
                 isPresented: $isPresented,
@@ -92,7 +94,7 @@ struct BottomSheet<T: Any, ContentView: View>: ViewModifier {
                 content: contentView
             )
 
-            rootViewController.present(bottomSheetViewController!, animated: true)
+            topViewController.present(bottomSheetViewController!, animated: true)
 
         } else {
             onDismiss?()
